@@ -1,0 +1,18 @@
+{
+  "name": "XPlatAzureStorageBackup",
+  "version": "1.0.0",
+  "main": "azureStorage.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "author": "Boyko Ant",
+  "license": "MIT",
+  "dependencies": {
+    "azure-cli": "^0.10.13",
+    "promise": "^7.1.1"
+  }
+}

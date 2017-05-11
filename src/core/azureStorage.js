@@ -92,6 +92,7 @@ service.context.getStorageAccountsBySubscriptionId = function(subscriptionId, mo
 
 service.context.authenticate()
 	.then(function () {
+		console.log(new Date());
 		return service.context.getEnabledSubscriptions();
 	})
 	.then(function (subscriptions) {
@@ -119,6 +120,7 @@ service.context.authenticate()
 			for (var i = 0; i < storageAccounts.length; i++) {
 				console.log(storageAccounts[i].name + ' at ' + storageAccounts[i].subscription.name);
 			}
+			console.log(new Date());
 		})
 	});
 

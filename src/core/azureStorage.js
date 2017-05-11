@@ -82,9 +82,9 @@ service.context.getStorageAccountsBySubscriptionId = function(subscriptionId, mo
 					});
 
 				resolve(storageAccounts);
-			}, function (error) {
-				// console.error('Error listing storage accounts for subscription id: ' + subscriptionId);
-				// console.error(error);
+			}, function () {
+				// 1. DreamSpark subscriptions do not have Azure Storage
+				// 2. ASM mode can fail if access was granted only for resource group
 				resolve([]);
 			});
 	});

@@ -1,0 +1,358 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>XPlat Azure Storage Backup Tool (backup mode)</title>
+
+        <link href="./../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="./../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+        <!-- In Electron, this is the correct way to include jQuery -->
+        <!--<script>window.$ = window.jQuery = require('./../bower_components/jquery/dist/jquery.min.js');</script>-->
+
+        <script src="./../bower_components/knockout/dist/knockout.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+
+	        <div data-bind="visible: stepN() == 1">
+
+		        <div class="row">
+			        <div class="col-xs-12">
+				        <div class="alert alert-info" role="alert">
+					        Step 1. Chose storage account to backup.
+				        </div>
+			        </div>
+		        </div>
+
+				<div class="row">
+					<div class="col-sm-3">Name</div>
+					<div class="col-sm-2">Type</div>
+					<div class="col-sm-3">Region</div>
+					<div class="col-sm-3">Subscription</div>
+					<div class="col-sm-1"></div>
+				</div>
+
+		        <div class="row">
+			        <div class="col-sm-3">
+				        <input data-bind="textInput: filter.tab1.name"
+						        type="text" class="form-control"/>
+			        </div>
+			        <div class="col-sm-2">
+				        <select class="form-control"
+				                data-bind="
+				                    options: lists.storageTypes,
+                                    optionsText: 'Name',
+                                    optionsValue: 'Name',
+                                    value: filter.tab1.type">
+				        </select>
+			        </div>
+			        <div class="col-sm-3">
+				        <select class="form-control"
+				                data-bind="
+				                    options: lists.locations,
+                                    optionsText: 'Name',
+                                    optionsValue: 'Name',
+                                    value: filter.tab1.location" >
+				        </select>
+			        </div>
+			        <div class="col-sm-3">
+				        <select class="form-control"
+				                data-bind="
+				                    options: lists.subscriptions,
+                                    optionsText: 'Name',
+                                    optionsValue: 'Id',
+                                    value: filter.tab1.subscription" >
+				        </select>
+			        </div>
+			        <div class="col-sm-1">
+			        </div>
+		        </div>
+
+		        <div class="row" data-bind='foreach: results.tab1.storageAccountsFiltered'>
+			        <div class="col-sm-3" data-bind="text: Name">
+			        </div>
+			        <div class="col-sm-2" data-bind="text: Type">
+			        </div>
+			        <div class="col-sm-3" data-bind="text: Location">
+			        </div>
+			        <div class="col-sm-3" data-bind="text: SubscriptionName">
+			        </div>
+			        <div class="col-sm-1">
+				        <button class="btn btn-success" data-bind="click: $root.actions.tab1.selectAccount">
+					        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+				        </button>
+			        </div>
+		        </div>
+
+	        </div>
+
+	        <div data-bind="visible: stepN() == 2">
+		        <div class="row">
+			        <div class="col-xs-12">
+				        <div class="alert alert-info" role="alert">
+					        Step 2. Chose storage account to store backup. <br/>
+					        Storage account chosed on previous step was excluded.
+				        </div>
+			        </div>
+		        </div>
+
+		        <div class="row">
+			        <div class="col-sm-3">Name</div>
+			        <div class="col-sm-2">Type</div>
+			        <div class="col-sm-3">Region</div>
+			        <div class="col-sm-3">Subscription</div>
+			        <div class="col-sm-1"></div>
+		        </div>
+
+		        <div class="row">
+			        <div class="col-sm-3">
+				        <input data-bind="textInput: filter.tab2.name"
+				               type="text" class="form-control"/>
+			        </div>
+			        <div class="col-sm-2">
+				        <select class="form-control"
+				                data-bind="
+				                    options: lists.storageTypes,
+                                    optionsText: 'Name',
+                                    optionsValue: 'Name',
+                                    value: filter.tab2.type">
+				        </select>
+			        </div>
+			        <div class="col-sm-3">
+				        <select class="form-control"
+				                data-bind="
+				                    options: lists.locations,
+                                    optionsText: 'Name',
+                                    optionsValue: 'Name',
+                                    value: filter.tab2.location" >
+				        </select>
+			        </div>
+			        <div class="col-sm-3">
+				        <select class="form-control"
+				                data-bind="
+				                    options: lists.subscriptions,
+                                    optionsText: 'Name',
+                                    optionsValue: 'Id',
+                                    value: filter.tab2.subscription" >
+				        </select>
+			        </div>
+			        <div class="col-sm-1">
+			        </div>
+		        </div>
+
+		        <div class="row" data-bind='foreach: results.tab2.storageAccountsFiltered'>
+			        <div class="col-sm-3" data-bind="text: Name">
+			        </div>
+			        <div class="col-sm-2" data-bind="text: Type">
+			        </div>
+			        <div class="col-sm-3" data-bind="text: Location">
+			        </div>
+			        <div class="col-sm-3" data-bind="text: SubscriptionName">
+			        </div>
+			        <div class="col-sm-1">
+				        <button class="btn btn-success" data-bind="click: $root.actions.tab2.selectAccount">
+					        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+				        </button>
+			        </div>
+		        </div>
+	        </div>
+
+	        <div data-bind="visible: stepN() == 3">
+		        <div class="row">
+			        <div class="col-xs-12">
+				        <div class="alert alert-info" role="alert">
+					        Step 3. Chose unique id for your backup.
+				        </div>
+			        </div>
+		        </div>
+
+		        <div class="row">
+			        <div class="col-xs-6">
+				        Backup unique id
+			        </div>
+			        <div class="col-xs-6">
+				        <input data-bind="textInput: options.backupId"
+				               type="text" class="form-control"/>
+			        </div>
+		        </div>
+
+		        <div class="row">
+			        <div class="col-xs-12 text-center">
+						<button class="btn btn-primary btn-lg" data-bind="click: actions.tab3.verifyAndRun">
+							<span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>
+							Start backup
+						</button>
+			        </div>
+		        </div>
+	        </div>
+
+        </div>
+
+        <script>
+	        (function() {
+		        var vm = {
+			        stepN: ko.observable(1),
+			        message: ko.observable('Chose storage account to backup.'),
+
+			        options: {
+				        storageSource: ko.observable(''),
+				        storageBackup: ko.observable(''),
+				        backupId: ko.observable('')
+			        },
+
+			        actions: {
+			        	tab1: {
+				        },
+				        tab2: {
+				        },
+				        tab3: {
+				        }
+			        },
+
+			        filter: {
+			        	tab1: {
+					        name: ko.observable(''),
+					        type: ko.observable(''),
+					        location: ko.observable(''),
+					        subscription: ko.observable('')
+				        },
+				        tab2: {
+					        name: ko.observable(''),
+					        type: ko.observable(''),
+					        location: ko.observable(''),
+					        subscription: ko.observable('')
+				        }
+			        },
+
+			        results: {
+			        	tab1: {
+				        },
+				        tab2: {
+				        }
+			        },
+
+			        lists: {
+				        storageAccounts: ko.observableArray([
+					        { Name: 'storage1prod', SubscriptionName: 'BizSpark', SubscriptionId: '2', Location: 'West Europe', Type: 'GRS' },
+					        { Name: 'storage1qa', SubscriptionName: 'BizSpark', SubscriptionId: '2', Location: 'West Europe', Type: 'LRS' },
+					        { Name: 'backupstorage', SubscriptionName: 'Pay-as-you-go', SubscriptionId: '1', Location: 'Brazil South', Type: 'GRS' }
+				        ]),
+				        storageTypes: ko.observableArray([
+					        { Name: '' },
+					        { Name: 'LRS' },
+					        { Name: 'ZRS' },
+					        { Name: 'GRS' },
+					        { Name: 'RA-GRS' }
+				        ]),
+				        subscriptions: ko.observableArray([
+					        { Name: '', Id: '' },
+					        { Name: 'Pay-as-you-go', Id: '1' },
+					        { Name: 'BizSpark', Id: '2' },
+					        { Name: 'MSDN', Id: '3' }
+				        ]),
+				        locations: ko.observableArray([
+					        { Name: '' },
+					        { Name: 'West Europe' },
+					        { Name: 'North Europe' },
+					        { Name: 'Brazil South' }
+				        ])
+			        }
+		        };
+
+		        vm.actions.tab1.selectAccount = function (storageAccount) {
+					vm.options.storageSource(JSON.stringify(storageAccount));
+					vm.stepN(2);
+		        };
+
+		        vm.actions.tab2.selectAccount = function (storageAccount) {
+			        vm.options.storageBackup(JSON.stringify(storageAccount));
+			        vm.stepN(3);
+		        };
+
+		        vm.actions.tab3.verifyAndRun = function () {
+			        alert('run');
+		        };
+
+	        	vm.results.tab1.storageAccountsFiltered = ko.pureComputed(function() {
+					var array = vm.lists.storageAccounts();
+
+					var filterValue = vm.filter.tab1.name().toLowerCase();
+					if (!!filterValue) {
+						array = array.filter(function(item) {
+							return item.Name.toLowerCase().indexOf(filterValue) >= 0;
+						});
+					}
+
+			        filterValue = vm.filter.tab1.type().toLowerCase();
+			        if (!!filterValue) {
+				        array = array.filter(function(item) {
+					        return item.Type.toLowerCase() == filterValue;
+				        });
+			        }
+
+			        filterValue = vm.filter.tab1.location().toLowerCase();
+			        if (!!filterValue) {
+				        array = array.filter(function(item) {
+					        return item.Location.toLowerCase() == filterValue;
+				        });
+			        }
+
+			        filterValue = vm.filter.tab1.subscription().toLowerCase();
+			        if (!!filterValue) {
+				        array = array.filter(function(item) {
+					        return item.SubscriptionId.toLowerCase() == filterValue;
+				        });
+			        }
+
+					return array;
+		        });
+
+		        vm.results.tab2.storageAccountsFiltered = ko.pureComputed(function() {
+		        	var storageAccountSourceJson = vm.options.storageSource();
+		        	if (!storageAccountSourceJson) {
+		        		return [];
+			        }
+			        var storageAccountSource = JSON.parse(vm.options.storageSource()).Name;
+
+			        var array = vm.lists.storageAccounts().filter(function (item) {
+				        return item.Name != storageAccountSource;
+			        });
+
+			        var filterValue = vm.filter.tab2.name().toLowerCase();
+			        if (!!filterValue) {
+				        array = array.filter(function(item) {
+					        return item.Name.toLowerCase().indexOf(filterValue) >= 0;
+				        });
+			        }
+
+			        filterValue = vm.filter.tab2.type().toLowerCase();
+			        if (!!filterValue) {
+				        array = array.filter(function(item) {
+					        return item.Type.toLowerCase() == filterValue;
+				        });
+			        }
+
+			        filterValue = vm.filter.tab2.location().toLowerCase();
+			        if (!!filterValue) {
+				        array = array.filter(function(item) {
+					        return item.Location.toLowerCase() == filterValue;
+				        });
+			        }
+
+			        filterValue = vm.filter.tab2.subscription().toLowerCase();
+			        if (!!filterValue) {
+				        array = array.filter(function(item) {
+					        return item.SubscriptionId.toLowerCase() == filterValue;
+				        });
+			        }
+
+			        return array;
+		        });
+
+	        	ko.applyBindings(vm);
+	        })();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,362 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>XPlat Azure Storage Backup Tool (restore mode)</title>
+
+        <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="./bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+        <!-- In Electron, this is the correct way to include jQuery -->
+        <script>window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.min.js');</script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-3">
+                    <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
+                    storagebackups
+                </div>
+                <div class="col-xs-3">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    storage1
+                </div>
+                <div class="col-xs-3">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    2017-05-20 15:45
+                </div>
+                <div class="col-xs-3">
+                    <span class="glyphicon glyphicon-import" aria-hidden="true"></span>
+                    storagenew
+                </div>
+            </div>
+
+            <div id="tab-1">
+                <div class="alert alert-info" role="alert">
+                    Step 1. Chose storage account with backups
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        Name
+                    </div>
+                    <div class="col-sm-2">
+                        Type
+                    </div>
+                    <div class="col-sm-3">
+                        Region
+                    </div>
+                    <div class="col-sm-3">
+                        Subscription
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control"/>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control">
+                            <option></option>
+                            <option>LRS</option>
+                            <option>GRS</option>
+                            <option>ZRS</option>
+                            <option>RA-GRS</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="form-control">
+                            <option></option>
+                            <option>West Europe</option>
+                            <option>North Europe</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="form-control">
+                            <option></option>
+                            <option>Pay as you go</option>
+                            <option>Biz Spark</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        storage1
+                    </div>
+                    <div class="col-sm-2">
+                        LRS
+                    </div>
+                    <div class="col-sm-3">
+                        West Europe
+                    </div>
+                    <div class="col-sm-3">
+                        Pay as you go
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-success" onclick="choseBackupContainer()">
+                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        storage2
+                    </div>
+                    <div class="col-sm-2">
+                        LRS
+                    </div>
+                    <div class="col-sm-3">
+                        West Europe
+                    </div>
+                    <div class="col-sm-3">
+                        Pay as you go
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-success" onclick="choseBackupContainer()">
+                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        storage3
+                    </div>
+                    <div class="col-sm-2">
+                        LRS
+                    </div>
+                    <div class="col-sm-3">
+                        West Europe
+                    </div>
+                    <div class="col-sm-3">
+                        Pay as you go
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-success" onclick="choseBackupContainer()">
+                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-2" style="display: none;">
+                <div class="alert alert-info" role="alert">
+                    Step 2. Chose storage account backup to restore
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-10">
+                                Storage Accounts Backups
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-10">
+                                storage 1
+                            </div>
+                            <div class="col-xs-1">
+                                <button class="btn btn-success">
+                                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-10">
+                                Storage Account Backup Snapshots
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-10">
+                                2017-05-20 15:45
+                            </div>
+                            <div class="col-xs-1">
+                                <button class="btn btn-success" onclick="choseBackupSnapshot()">
+                                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-10">
+                                2017-05-21 17:20
+                            </div>
+                            <div class="col-xs-1">
+                                <button class="btn btn-success" onclick="choseBackupSnapshot()">
+                                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-10">
+                                2017-05-22 09:57
+                            </div>
+                            <div class="col-xs-1">
+                                <button class="btn btn-success" onclick="choseBackupSnapshot()">
+                                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-3" style="display: none;">
+                <div class="alert alert-info" role="alert">
+                    Step 3. Chose destination storage account to restore
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        Name
+                    </div>
+                    <div class="col-sm-2">
+                        Type
+                    </div>
+                    <div class="col-sm-3">
+                        Region
+                    </div>
+                    <div class="col-sm-3">
+                        Subscription
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control"/>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="form-control">
+                            <option></option>
+                            <option>LRS</option>
+                            <option>GRS</option>
+                            <option>ZRS</option>
+                            <option>RA-GRS</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="form-control">
+                            <option></option>
+                            <option>West Europe</option>
+                            <option>North Europe</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="form-control">
+                            <option></option>
+                            <option>Pay as you go</option>
+                            <option>Biz Spark</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        storage1
+                    </div>
+                    <div class="col-sm-2">
+                        LRS
+                    </div>
+                    <div class="col-sm-3">
+                        West Europe
+                    </div>
+                    <div class="col-sm-3">
+                        Pay as you go
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-success" onclick="choseDestination()">
+                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        storage2
+                    </div>
+                    <div class="col-sm-2">
+                        LRS
+                    </div>
+                    <div class="col-sm-3">
+                        West Europe
+                    </div>
+                    <div class="col-sm-3">
+                        Pay as you go
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-success" onclick="choseDestination()">
+                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        storage3
+                    </div>
+                    <div class="col-sm-2">
+                        LRS
+                    </div>
+                    <div class="col-sm-3">
+                        West Europe
+                    </div>
+                    <div class="col-sm-3">
+                        Pay as you go
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-success" onclick="choseDestination()">
+                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-4" style="display: none;">
+                <div class="alert alert-info" role="alert">
+                    Step 4. Start restore
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function choseBackupContainer() {
+                $('#tab-1').hide();
+                $('#tab-2').show();
+                $('#tab-3').hide();
+                $('#tab-4').hide();
+            }
+
+            function choseBackupSnapshot() {
+                $('#tab-1').hide();
+                $('#tab-2').hide();
+                $('#tab-3').show();
+                $('#tab-4').hide();
+            }
+
+            function choseDestination() {
+                $('#tab-1').hide();
+                $('#tab-2').hide();
+                $('#tab-3').hide();
+                $('#tab-4').show();
+            }
+        </script>
+    </body>
+</html>

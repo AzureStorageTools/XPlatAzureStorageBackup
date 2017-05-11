@@ -1,0 +1,16 @@
+{
+  "name": "XPlatAzureStorageBackup",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "debug": "electron . --debug"
+  },
+  "private": true,
+  "keywords": [],
+  "author": "Boyko Ant",
+  "license": "MIT",
+  "dependencies": {
+    "azure-arm-storage": "^1.0.0-preview"
+  }
+}

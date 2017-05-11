@@ -1,0 +1,13 @@
+{
+  "name": "XPlatAzureStorageBackup",
+  "authors": [
+    "Boyko Ant"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/AzureStorageTools/XPlatAzureStorageBackup",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "knockout": "^3.4.2"
+  }
+}

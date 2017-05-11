@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>XPlat Azure Storage Backup Tool</title>
+
+        <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="./bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h1>XPlat Azure Storage Backup Tool</h1>
+                <p>Chose working mode</p>
+                <p>
+                    <button class="btn btn-primary btn-lg" onclick="openModal('backup')">
+                        Backup
+                    </button>
+                    <button class="btn btn-primary btn-lg" onclick="openModal('restore')">
+                        Restore
+                    </button>
+                </p>
+            </div>
+        </div>
+
+        <script>
+            function openModal(htmlFileName) {
+	            const { remote } = require('electron');
+	            remote.getCurrentWindow().loadURL('file://' + __dirname + '/pages/' + htmlFileName + '.html');
+
+
+//                const {BrowserWindow} = require('electron').remote;
+//                var win = new BrowserWindow({
+//                    width: 800,
+//                    height: 600
+//                });
+//                win.loadURL('file://' + __dirname + '/pages/' + htmlFileName + '.html');
+            }
+        </script>
+    </body>
+</html>

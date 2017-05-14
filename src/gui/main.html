@@ -28,14 +28,6 @@
             function openModal(htmlFileName) {
 	            const { remote } = require('electron');
 	            remote.getCurrentWindow().loadURL('file://' + __dirname + '/pages/' + htmlFileName + '.html');
-
-
-//                const {BrowserWindow} = require('electron').remote;
-//                var win = new BrowserWindow({
-//                    width: 800,
-//                    height: 600
-//                });
-//                win.loadURL('file://' + __dirname + '/pages/' + htmlFileName + '.html');
             }
         </script>
     </body>
